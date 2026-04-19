@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><title>EmpTrack Pro</title></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <span class="brand-icon">⬡</span>
+    <span class="brand-name">EmpTrack Pro</span>
+  </div>
+  <nav class="nav">
+    <a href="#" class="nav-item active" data-page="dashboard">
+      <span class="nav-icon">▦</span> Dashboard
+    </a>
+    <a href="#" class="nav-item" data-page="employees">
+      <span class="nav-icon">◈</span> Employees
+    </a>
+    <a href="#" class="nav-item" data-page="add">
+      <span class="nav-icon">⊕</span> Add Employee
+    </a>
+  </nav>
+  <div class="sidebar-footer">Built by Harikrishna S R</div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1 class="page-title" id="pageTitle">Dashboard</h1>
+    </div>
+    <div class="topbar-right">
+      <div class="status-dot"></div>
+      <span class="status-text">Backend Connected</span>
+    </div>
+  </header>
+
+  <!-- PAGE: DASHBOARD -->
+  <section class="page active" id="page-dashboard">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Employees</div>
+        <div class="stat-value" id="statTotal">—</div>
+        <div class="stat-sub">Active records</div>
+      </div>
+      <div class="stat-card accent">
+        <div class="stat-label">Departments</div>
+        <div class="stat-value" id="statDepts">—</div>
+        <div class="stat-sub">Unique teams</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg. Salary</div>
+        <div class="stat-value" id="statSalary">—</div>
+        <div class="stat-sub">Per employee</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2>Recent Employees</h2>
+      <button class="btn-link" data-page="employees">View all →</button>
+    </div>
+    <div class="table-wrapper">
+      <table class="emp-table" id="dashTable">
+        <thead>
+          <tr><th>Name</th><th>Role</th><th>Department</th><th>Salary</th><th>Joined</th></tr>
+        </thead>
+        <tbody id="dashTableBody">
+          <tr><td colspan="5" class="loading-row">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PAGE: EMPLOYEES -->
+  <section class="page" id="page-employees">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search name, email, role..."/>
+      </div>
+      <select id="deptFilter" class="dept-select">
+        <option value="">All Departments</option>
+      </select>
+      <button class="btn-primary" data-page="add">+ Add Employee</button>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="emp-table" id="empTable">
+        <thead>
+          <tr><th>#</th><th>Name</th><th>Email</th><th>Department</th><th>Role</th><th>Salary</th><th>Joined</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="empTableBody">
+          <tr><td colspan="8" class="loading-row">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="record-count" id="recordCount"></div>
+  </section>
+
+  <!-- PAGE: ADD / EDIT -->
+  <section class="page" id="page-add">
+    <div class="form-card">
+      <h2 class="form-title" id="formTitle">Add New Employee</h2>
+      <form id="empForm" autocomplete="off">
+        <input type="hidden" id="empId"/>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" id="fName" placeholder="e.g. Ravi Kumar" required/>
+          </div>
+          <div class="form-group">
+            <label>Email Address <span class="req">*</span></label>
+            <input type="email" id="fEmail" placeholder="ravi@company.com" required/>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="fPhone" placeholder="10-digit mobile number"/>
+          </div>
+          <div class="form-group">
+            <label>Department <span class="req">*</span></label>
+            <input type="text" id="fDept" placeholder="e.g. Engineering" required/>
+          </div>
+          <div class="form-group">
+            <label>Job Role <span class="req">*</span></label>
+            <input type="text" id="fRole" placeholder="e.g. Software Engineer" required/>
+          </div>
+          <div class="form-group">
+            <label>Salary (₹) <span class="req">*</span></label>
+            <input type="number" id="fSalary" placeholder="e.g. 65000" min="0" required/>
+          </div>
+          <div class="form-group">
+            <label>Join Date <span class="req">*</span></label>
+            <input type="date" id="fJoinDate" required/>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn-primary" id="submitBtn">Save Employee</button>
+        </div>
+      </form>
+      <div class="form-msg" id="formMsg"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- DELETE MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-icon">⚠</div>
+    <h3>Delete Employee?</h3>
+    <p id="modalText">This will permanently remove the record.</p>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="modalCancel">Cancel</button>
+      <button class="btn-danger" id="modalConfirm">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
